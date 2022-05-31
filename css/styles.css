@@ -67,6 +67,7 @@ opacity:0;
 }
 
 .card-listImage {
+   width: 100vh;
    position: relative;
    z-index: -1;
 }
@@ -79,7 +80,7 @@ opacity:0;
 } */
 
 .img {
-   width: 100%;
+   width: 100vh;
 }
 
 * {
