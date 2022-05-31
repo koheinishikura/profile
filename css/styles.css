@@ -64,6 +64,7 @@ opacity:0;
 
 .card-listImage {
    position: relative;
+   z-index: -1;
 }
 
 /* Works説明文 */
