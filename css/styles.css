@@ -5,6 +5,10 @@ html,body {
    /* overflow: hidden */
 }
 
+.no-scroll {
+   overflow: hidden
+}
+
 .fadeIn {
 animation-name:fadeInAnime;
 animation-duration:1s;
