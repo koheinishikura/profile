@@ -2,9 +2,14 @@
 
 html,body .no-scroll {
    /* スクロール禁止 */
-   overflow: hidden
+   /* overflow: hidden */
    /* Chrome ピンチアウト禁止 */
-   touch-action: none;
+   /* touch-action: none; */
+}
+
+.no-scroll {
+      /* スクロール禁止 */
+      overflow: hidden
 }
 
 .fadeIn {
