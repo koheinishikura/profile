@@ -10,7 +10,7 @@ window.onload = function() {
     document.addEventListener('touchmove', disableScroll, { passive: false });
     document.body.classList.add('overflow-hidden');
   }
-  
+
   // スクロール解除
   document.getElementById('off').onclick = function() {
     // イベントと関数を紐付け
@@ -18,3 +18,8 @@ window.onload = function() {
     document.body.classList.remove('overflow-hidden');
   }
 }
+
+// ピンチイン・ピンチアウト禁止
+document.documentElement.addEventListener('touchstart', function (e) {
+  if (e.touches.length >= 2) {e.preventDefault();}
+}, {passive: false});
