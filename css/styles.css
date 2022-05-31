@@ -3,19 +3,19 @@
 html,body {
    /* スクロール禁止 */
    /* overflow: hidden */
-   /* Chrome ピンチアウト禁止 */
-   touch-action:none;
 }
 
 .no-scroll {
    overflow: hidden
+   /* Chrome ピンチアウト禁止 */
+   touch-action: none;
 }
 
 .fadeIn {
-animation-name:fadeInAnime;
-animation-duration:1s;
-animation-fill-mode:forwards;
-opacity:0;
+animation-name: fadeInAnime;
+animation-duration: 1s;
+animation-fill-mode: forwards;
+opacity: 0;
 }
 
 @keyframes fadeInAnime{
