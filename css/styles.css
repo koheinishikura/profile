@@ -22,6 +22,111 @@ opacity:0;
    }
 }
 
+/* TopView */
+.area_top_view{
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.text {
+   max-width: 980px;
+   margin-top: 10vh;
+   margin-left: auto;
+   margin-right: auto;
+   text-align: center;
+}
+
+.content {
+   max-width: 1920px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.card-wrap {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+}
+
+.card-list {
+   max-width: 630px;
+   margin-bottom: 50px;
+}
+
+.card-listTitle {
+   font-size: 18px;
+   font-weight: bold;
+   margin: 30px 0;
+   text-align: center;
+}
+
+.card-listImage {
+   position: relative;
+}
+
+/* Works説明文 */
+/* .card-listText {
+   font-size: 15px;
+   line-height: 1.6;
+   text-align: center;
+} */
+
+.img {
+   width: 100%;
+}
+
+* {
+   box-sizing: border-box;
+}
+body {
+   margin: 0;
+   padding: 0;
+}
+header {
+   padding: 30px 4% 30px;
+   position: fixed;
+   top: 0;
+   width: 100%;
+   background-color: #fff;
+   display: flex;
+   align-items: center;
+   z-index: 10;
+}
+h1 {
+   margin: 0;
+   padding: 0;
+   font-size: 20px;
+}
+h2 {
+   font-size: 40px;
+}
+a {
+   text-decoration: none;
+   color: #4b4b4b;
+}
+nav {
+   margin: 0 0 0 auto;
+}
+ul {
+   list-style: none;
+   margin: 0;
+   display: flex;
+}
+li {
+   margin: 0 0 0 15px;
+   font-size: 14px;
+}
+
+.sp-nav {
+   display: none;
+}
+
+.nav-bold {
+   font-weight: bold;
+}
+
 /* パソコンで見たときは"pc"のclassがついた画像が表示される */
 .pc { display: block !important; }
 .sp { display: none !important; }
@@ -137,106 +242,6 @@ opacity:0;
       transform: translateY( 0 );
       opacity: 1;
    }
-}
-
-/* TopView */
-.area_top_view{
-   height: 100vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-
-.text {
-   max-width: 980px;
-   margin-top: 10vh;
-   margin-left: auto;
-   margin-right: auto;
-   text-align: center;
-}
-
-.content {
-   max-width: 1920px;
-   margin-left: auto;
-   margin-right: auto;
-}
-
-.card-wrap {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-between;
-}
-
-.card-list {
-   max-width: 630px;
-   margin-bottom: 50px;
-}
-
-.card-listTitle {
-   font-size: 18px;
-   font-weight: bold;
-   margin: 30px 0;
-   text-align: center;
-}
-
-/* Works説明文 */
-/* .card-listText {
-   font-size: 15px;
-   line-height: 1.6;
-   text-align: center;
-} */
-
-.img {
-   width: 100%;
-}
-
-* {
-   box-sizing: border-box;
-}
-body {
-   margin: 0;
-   padding: 0;
-}
-header {
-   padding: 30px 4% 30px;
-   position: fixed;
-   top: 0;
-   width: 100%;
-   background-color: #fff;
-   display: flex;
-   align-items: center;
-}
-h1 {
-   margin: 0;
-   padding: 0;
-   font-size: 20px;
-}
-h2 {
-   font-size: 40px;
-}
-a {
-   text-decoration: none;
-   color: #4b4b4b;
-}
-nav {
-   margin: 0 0 0 auto;
-}
-ul {
-   list-style: none;
-   margin: 0;
-   display: flex;
-}
-li {
-   margin: 0 0 0 15px;
-   font-size: 14px;
-}
-
-.sp-nav {
-   display: none;
-}
-
-.nav-bold {
-   font-weight: bold;
 }
 
 .h-100 {
