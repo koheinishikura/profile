@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <meta name="robots" content="noindex,nofollow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Title -->
+        <title>Works - KOHEI NISHIKURA | 西倉康平</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS -->
+        <link href="css/styles.css" rel="stylesheet" />
+        <!-- Import jQuery -->
+        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+        <script>
+        $(function() {
+            const hum = $('#hamburger, .close')
+            const nav = $('.sp-nav')
+            hum.on('click', function(){
+                nav.toggleClass('toggle');
+            });
+        });
+        </script>
+    </head>
+    <body class="fadeIn h-100">
+        <main>
+            <header>
+                <h1>
+                    <a href="index.html">KOHEI NISHIKURA</a>
+                </h1>
+                <!-- PC Navigation -->
+                <nav class="pc-nav">
+                    <ul>
+                        <li><a href="about.html">ABOUT</a></li>
+                        <li><a href="works.html">WORKS</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                    </ul>
+                </nav>
+                <!-- Smartphone Navigation -->
+                <nav class="sp-nav">
+                    <ul>
+                        <li><a href="about.html">ABOUT</a></li>
+                        <li><a href="works.html">WORKS</a></li>
+                        <li><a href="contact.html">CONTACT</a></li>
+                        <li class="close"><span>閉じる</span></li>
+                    </ul>
+                </nav>
+                <div id="hamburger">
+                    <span></span>
+                </div>
+            </header>
+            <!-- TopView_bg Setting -->
+            <div class="area_top_view">
+                <a href="works.html">
+                    <img class="pc" src="./assets/img/top-view_pc.jpg" alt="Works_PC">
+                    <img class="sp" src="./assets/img/top-view_sp.jpg" alt="Works_SP">
+                </a>
+            </div>
+        </main>
+        <!-- Footer -->
+        <footer>
+            <!-- <p class="copyright">Copyright &copy; 2022 KOHEI NISHIKURA</p> -->
+        </footer>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
