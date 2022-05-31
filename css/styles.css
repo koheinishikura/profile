@@ -1,11 +1,7 @@
 @charset "UTF-8";
 
-html,body {
+html,body .no-scroll {
    /* スクロール禁止 */
-   /* overflow: hidden */
-}
-
-.no-scroll {
    overflow: hidden
    /* Chrome ピンチアウト禁止 */
    touch-action: none;
