@@ -77,7 +77,6 @@ footer {
    width: 100%;
 }
 
-
 /* スクロール禁止 */
 .no-scroll {
    overflow: hidden;
@@ -208,7 +207,7 @@ footer {
    }
 
    .thumbnail {
-      width: 40vh;
+      width: 42vh;
       height: auto;
    }
    .card-listTitle {
