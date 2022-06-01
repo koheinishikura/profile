@@ -63,8 +63,8 @@ html,body {
 .card-listTitle {
    font-size: 18px;
    font-weight: bold;
-   margin: 30px 0;
    text-align: center;
+   margin: 30px 0;
 }
 
 .card-listImage {
@@ -136,20 +136,36 @@ li {
 .sp { display: none !important; }
 
 @media screen and (max-width :1280px){
+   h2 {
+      font-size: 25px;
+   }
+
    .card-wrap {
       display: block;
-      text-align: center;
+   }
+
+   .card-listTitle {
+      font-size: 15px;
+      margin: auto;
+   }
+
+   .card-listImage {
+      width: 100vh;
    }
 
    img {
-      width: 70vh;
-      height: auto;
+      width: 40vh;
+      margin: auto;
    }
 }
 
 @media screen and (max-width: 640px) {
    .pc { display: none !important; }
-   .sp { display: block !important; }
+   .sp {
+      display: block !important;
+      width: 100vh;
+      height: auto;
+   }
 
    .pc-nav {
       display: none;
