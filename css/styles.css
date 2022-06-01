@@ -103,6 +103,26 @@ footer {
 .my-name {
    font-size: 24px;
    font-weight: 700;
+   margin-left: 5px;
+}
+
+.about-name {
+   font-size: 18px;
+   font-weight: 500;
+}
+
+.rubyposition_under{
+   display: inline-block;
+   font-family: 'Noto Sans JP', sans-serif;
+   font-size: 24px;
+   font-weight: 700;
+   color: #4b4b4b;
+   margin-bottom: 10px;
+}
+.rubyposition_under ruby{
+   display: flex;
+   flex-direction: column;
+   text-align-last: justify;
 }
 
 /* Banner Setting */
