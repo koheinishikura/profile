@@ -153,8 +153,9 @@ footer {
 
 /* WORKS 個別 Setting */
 .card-list {
-   max-width: 630px;
+   max-width: 100%;
    margin-bottom: 10px; /* 各項下幅 */
+   border:solid 5px #000;
 }
 
 .card-listTitle {
@@ -170,6 +171,7 @@ footer {
    text-align: center;
    position: relative;
    z-index: -1;
+   border:solid 3px #000;
 }
 
 /* WORKS Thumbnail img */
@@ -209,6 +211,7 @@ footer {
    .thumbnail {
       width: 40vh;
       height: auto;
+      border:solid 1px #000;
    }
    .card-listTitle {
       font-size: 14px; /* ここの数値が配置に影響している可能性大 */
@@ -226,10 +229,6 @@ footer {
       display: block !important;
       width: 50vh;
       height: auto;
-   }
-
-   .thumbnail {
-      width: 40vh;
    }
 
    /* SP状態で PC Nav Menu を消す */
