@@ -123,6 +123,8 @@ p {
 }
 
 nav {
+   font-family: 'Noto Sans JP', sans-serif;
+   font-weight: 300;
    margin: 0 0 0 auto;
 }
 
@@ -307,7 +309,7 @@ footer {
 }
 
 .copyright {
-   font-size: 12px;
+   font-size: 14px;
    font-weight: 400;
    text-align: center;
    color: #4b4b4b;
