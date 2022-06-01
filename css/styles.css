@@ -1,22 +1,20 @@
 @charset "UTF-8";
 
 html,body {
-   /* スクロール禁止 */
-   /* overflow: hidden; */
    /* Chrome ピンチアウト禁止 */
    /* touch-action: none; */
 }
 
 .no-scroll {
-      /* スクロール禁止 */
-      overflow: hidden;
+   /* スクロール禁止 */
+   overflow: hidden;
 }
 
 .fadeIn {
-animation-name: fadeInAnime;
-animation-duration: 1s;
-animation-fill-mode: forwards;
-opacity: 0;
+   animation-name: fadeInAnime;
+   animation-duration: 1s;
+   animation-fill-mode: forwards;
+   opacity: 0;
 }
 
 @keyframes fadeInAnime{
@@ -38,7 +36,7 @@ opacity: 0;
 }
 
 .text {
-   max-width: 980px;
+   max-width: 100vw;
    margin-top: 10vh;
    margin-left: auto;
    margin-right: auto;
@@ -81,10 +79,6 @@ opacity: 0;
    line-height: 1.6;
    text-align: center;
 } */
-
-.img {
-   /* width: 100vh; */
-}
 
 * {
    box-sizing: border-box;
@@ -144,6 +138,12 @@ li {
 @media screen and (max-width :1280px){
    .card-wrap {
       display: block;
+      text-align: center;
+   }
+
+   img {
+      width: 70vh;
+      height: auto;
    }
 }
 
