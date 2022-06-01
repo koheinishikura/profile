@@ -1,10 +1,5 @@
 @charset "UTF-8";
 
-html,body {
-   /* Chrome ピンチアウト禁止 */
-   /* touch-action: none; */
-}
-
 .no-scroll {
    /* スクロール禁止 */
    overflow: hidden;
@@ -19,11 +14,11 @@ html,body {
 
 @keyframes fadeInAnime{
    from {
-   opacity: 0;
+      opacity: 0;
    }
 
    to {
-   opacity: 1;
+      opacity: 1;
    }
 }
 
@@ -63,7 +58,7 @@ html,body {
 
 .card-listTitle {
    font-size: 18px;
-   font-weight: bold;
+   font-weight: 400;
    text-align: center;
    margin: 30px 0;
 }
@@ -77,13 +72,6 @@ html,body {
 .thumbnail {
    width: 50vh;
 }
-
-/* Works説明文 */
-/* .card-listText {
-   font-size: 15px;
-   line-height: 1.6;
-   text-align: center;
-} */
 
 * {
    box-sizing: border-box;
@@ -109,13 +97,19 @@ header {
 h1 {
    margin: 0;
    padding: 0;
-   font-size: 20px;
+   font-size: 25px;
    font-family: 'Noto Sans JP', sans-serif;
+   font-weight: 700;
 }
 
 h2 {
    font-size: 40px;
    font-family: 'Noto Sans JP', sans-serif;
+   color: #4b4b4b;
+}
+
+h3 {
+   color: #4b4b4b;
 }
 
 a {
@@ -125,6 +119,7 @@ a {
 
 p {
    font-family: 'Noto Sans JP', sans-serif;
+   font-weight: 300;
 }
 
 nav {
@@ -264,6 +259,7 @@ li {
       padding: 20px 0;
       color: #fff;
    }
+
    /* 閉じるアイコン */
    .sp-nav .close {
       position: relative;
@@ -311,6 +307,8 @@ footer {
 }
 
 .copyright {
+   font-size: 12px;
+   font-weight: 400;
    text-align: center;
    color: #4b4b4b;
 }
