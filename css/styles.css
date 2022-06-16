@@ -255,17 +255,17 @@ footer {
 
    /* SP Nav Menu */
    .sp-nav {
-      z-index: 10;
+      background: rgba(0, 0, 0, .8);
+      display: block;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      display: block;
-      background: rgba(0, 0, 0, .8);
       opacity: 0;
       transform: translateY(-100%);
       transition: all .2s ease-in-out;
+      z-index: 10;
    }
 
    /* ハンバーガーメニュー */
@@ -321,7 +321,7 @@ footer {
       padding: 0;
    }
    .sp-nav li span {
-      font-size: 15px;
+      font-size: 14px;
       color: #fff;
    }
    .sp-nav li a, .sp-nav li span {

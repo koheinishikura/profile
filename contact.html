@@ -28,6 +28,11 @@
                 nav.toggleClass('toggle');
             });
         });
+
+        window.addEventListener('DOMContentLoaded', () => {document.getElementById('copy')
+            .addEventListener('click', () => {copyToClipboard('koheinishikura@nishikurakanban.com');
+            });
+        });
         </script>
     </head>
     <body class="h-100">
@@ -62,11 +67,11 @@
         <div class="no-scroll text">
             <h2>CONTACT</h2>
             <h3>Mail</h3>
-            <a href="mailto:koheinishikura@nishikurakanban.com">koheinishikura@nishikurakanban.com</a>
+            <button id="copy">copy to email address</button>
             <h3>Twitter</h3>
-            <a href="https://twitter.com/Nissiee_jp">@Nissiee_jp</a>
+            <a href="https://twitter.com/Nissiee_jp" target="_blank">@Nissiee_jp</a>
             <h3>Instagram</h3>
-            <a href="https://www.instagram.com/nissiee_jp/">@Nissiee_jp</a>
+            <a href="https://www.instagram.com/nissiee_jp/" target="_blank">@Nissiee_jp</a>
         </div>
         <!-- Footer -->
         <footer>
