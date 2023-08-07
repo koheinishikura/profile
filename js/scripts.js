@@ -17,6 +17,22 @@ window.onload = function() {
     document.removeEventListener('touchmove', disableScroll, { passive: false });
     document.body.classList.remove('overflow-hidden');
   }
+  // 現在のブラウザサイズに合わせてスライドショーのサイズを調整
+  function adjustSlideshowSize() {
+    var slideshowContainer = document.querySelector(".sp-slideshow");
+    if (slideshowContainer) {
+      var width = window.innerWidth;
+      // 縦横比を16:9に保つ
+      var height = (width * 9) / 16;
+
+      // ここでスライドショーのサイズを調整できます。例：
+      slideshowContainer.style.width = width + 'px';
+      slideshowContainer.style.height = height + 'px';
+    }
+  }
+
+    // ブラウザのサイズを読み取り、スライドショーのサイズを調整
+    adjustSlideshowSize();
 }
 
 // ピンチイン・ピンチアウト禁止
@@ -88,5 +104,27 @@ function showSlide(slideIndex) {
     document.querySelector(".sp-slideshow").style.display = "block";
     // スライドショーを開始
     startSlideshow();
+  }
+});
+
+window.addEventListener('load', function() {
+  // サイズを取得
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+
+  // スライドショーのコンテナの要素を取得
+  var slideshowContainer = document.querySelector('.sp-slideshow');
+
+  if (slideshowContainer) {
+    // サイズに基づいてコンテナの高さと幅を設定
+    slideshowContainer.style.width = width + 'px';
+    slideshowContainer.style.height = height + 'px';
+
+    // 各スライドのサイズも同様に設定
+    var slides = slideshowContainer.querySelectorAll('img');
+    slides.forEach(function(slide) {
+      slide.style.width = width + 'px';
+      slide.style.height = height + 'px';
+    });
   }
 });
