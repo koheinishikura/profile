@@ -43,3 +43,50 @@ document.body.removeChild(pre);
 
 return result;
 }
+
+// DOMのロード完了時に実行
+document.addEventListener("DOMContentLoaded", function() {
+  // スライドの要素をすべて取得
+  var slides = document.querySelectorAll(".sp-slide");
+  // 現在のスライドのインデックス
+  var currentSlide = 0;
+
+// 指定されたインデックスのスライドを表示
+function showSlide(slideIndex) {
+  // すべてのスライドを非表示に設定
+  slides.forEach(function(slide) {
+    slide.style.display = "none"; // 非表示に設定
+    slide.style.opacity = 0; // 透明度を0に設定
+  });
+  // 指定されたスライドを表示
+  slides[slideIndex].style.display = "block";
+  // 少し遅延させてから透明度を変更することでフェードイン効果を実現
+  setTimeout(function() {
+    slides[slideIndex].style.opacity = 1;
+  }, 10);
+}
+
+  // 次のスライドへ移動
+  function nextSlide() {
+    // 現在のスライドインデックスを更新
+    currentSlide = (currentSlide + 1) % slides.length;
+    // 指定されたインデックスのスライドを表示
+    showSlide(currentSlide);
+  }
+
+  // スライドショーを開始
+  function startSlideshow() {
+    // 最初のスライドを表示
+    showSlide(currentSlide);
+    // 3秒ごとに次のスライドへ移動
+    setInterval(nextSlide, 3000);
+  }
+
+  // SP表示の場合のみスライドショーを開始
+  if (window.innerWidth <= 640) {
+    // スライドショーのコンテナを表示
+    document.querySelector(".sp-slideshow").style.display = "block";
+    // スライドショーを開始
+    startSlideshow();
+  }
+});
