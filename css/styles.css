@@ -264,6 +264,15 @@ footer {
       transition: opacity 1s ease-in-out; /* 透明度の変化を1秒かけて行う */
    }
 
+   body.no-scroll {
+      overflow: hidden;
+   }
+
+   /* SP表示の際にフッターを隠す */
+   .index-page footer {
+      display: none;
+   }
+
    /* SP状態で PC Nav Menu を消す */
    .pc-nav {
       display: none;

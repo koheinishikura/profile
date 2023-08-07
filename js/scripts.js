@@ -90,19 +90,3 @@ function showSlide(slideIndex) {
     startSlideshow();
   }
 });
-
-// 推奨ブラウザのリスト
-var recommendedBrowsers = ['Chrome', 'Firefox', 'Safari'];
-
-// ユーザーエージェントからブラウザを識別
-var userBrowser = navigator.userAgent;
-
-// 推奨ブラウザかどうかチェック
-var isRecommended = recommendedBrowsers.some(function(browser) {
-  return userBrowser.includes(browser);
-});
-
-// 推奨ブラウザでない場合、警告を表示
-if (!isRecommended) {
-  alert('推奨ブラウザを使用していないようです。最適な閲覧体験のために、Google Chrome、Mozilla Firefox、またはSafariをご利用ください。');
-}
