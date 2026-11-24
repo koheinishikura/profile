@@ -412,22 +412,20 @@ a:focus-visible, button:focus-visible {
       padding: 0;
    }
 
-   .card-listTitle {
-      font-size: 12px;
-      margin: auto;
-   }
-
    .thumbnail {
       display: inline-block; /* 中央にそろえる（.card-listImage の text-align: center） */
       width: 42vh;
       height: auto;
    }
 
+   /* 作品名：文字が画面の端に付かないよう、左右に16pxの余白をとる（2026-11-24）
+      前は同じ指定が2つあり、文字の大きさを12pxのあと14pxで上書きしていたので、1つにまとめた（見た目は14pxのまま） */
    .card-listTitle {
-      font-size: 14px; /* ここの数値が配置に影響している可能性大 */
+      font-size: 14px;
       font-weight: 500;
       text-align: center;
       margin: 30px 0;
+      padding: 0 16px;
    }
 
    .works_pc {
