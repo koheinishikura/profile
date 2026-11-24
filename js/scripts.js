@@ -26,6 +26,13 @@ function copyToClipboard(text) {
   return result;
 }
 
+// フッターのコピーライトの年を、見ている年に合わせる
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('.copyright-year').forEach(function(el) {
+    el.textContent = new Date().getFullYear();
+  });
+});
+
 // DOMのロード完了時にスライドショーを制御する機能
 document.addEventListener("DOMContentLoaded", function() {
   var slides = document.querySelectorAll(".sp-slide"); // スライド要素をすべて取得
