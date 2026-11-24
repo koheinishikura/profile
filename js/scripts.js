@@ -26,10 +26,22 @@ function copyToClipboard(text) {
   return result;
 }
 
-// フッターのコピーライトの年を、見ている年に合わせる
+// 日本時間（Asia/Tokyo）での今の年を返す
+// 見ている人の端末がどの国の時間に設定されていても、日本の年に合わせる
+function getJapanYear(date) {
+  try {
+    return new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tokyo', year: 'numeric' }).format(date);
+  } catch (e) {
+    // Intl が使えない古いブラウザでは、UTC に9時間足して日本時間の年を出す
+    return new Date(date.getTime() + 9 * 60 * 60 * 1000).getUTCFullYear();
+  }
+}
+
+// フッターのコピーライトの年を、日本時間の今の年に合わせる
 document.addEventListener("DOMContentLoaded", function() {
+  var year = getJapanYear(new Date());
   document.querySelectorAll('.copyright-year').forEach(function(el) {
-    el.textContent = new Date().getFullYear();
+    el.textContent = year;
   });
 });
 
