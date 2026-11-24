@@ -566,6 +566,11 @@ a:focus-visible, button:focus-visible {
       color: var(--color-on-overlay);
    }
 
+   /* WORKS：一番下までスクロールしたとき、上に戻るボタンとCopyrightが並ばないよう、フッターの下に余白をとる（2026-11-24） */
+   .works-page footer {
+      padding-bottom: 60px;
+   }
+
    /* ページの上に戻るボタン：スマホは押せる範囲の44pxにそろえる */
    .to-top {
       right: calc(16px + env(safe-area-inset-right));
