@@ -8,12 +8,12 @@ function toggleSlideshow() {
   slideshow.style.display = window.innerWidth <= SP_MAX_WIDTH ? 'block' : 'none';
 }
 
-// ピンチイン・ピンチアウトを禁止する機能
-document.documentElement.addEventListener('touchstart', function (e) {
-  if (e.touches.length >= 2) {e.preventDefault();}
-}, {passive: false});
+// 端末で動きを減らす設定にしているか
+function prefersReducedMotion() {
+  return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
 
-// テキストをクリップボードにコピーする関数
+// テキストをクリップボードにコピーする関数（navigator.clipboard が使えないときの方法）
 function copyToClipboard(text) {
   const pre = document.createElement('pre');
   pre.style.webkitUserSelect = 'auto';
@@ -25,6 +25,75 @@ function copyToClipboard(text) {
   document.body.removeChild(pre);
   return result;
 }
+
+// CONTACT：メールアドレスをコピーし、できたらボタンの文字を2秒だけ「Copied」にする
+function copyEmail(button, text) {
+  function showResult(ok) {
+    if (!ok) return;
+    var label = button.getAttribute('data-label') || button.textContent;
+    button.setAttribute('data-label', label);
+    button.style.minWidth = button.offsetWidth + 'px'; // 文字が短くなってもボタンの幅を変えない
+    button.textContent = 'Copied';
+    clearTimeout(button.copyTimer);
+    button.copyTimer = setTimeout(function() {
+      button.textContent = label;
+    }, 2000);
+  }
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(function() {
+      showResult(true);
+    }, function() {
+      showResult(copyToClipboard(text));
+    });
+  } else {
+    showResult(copyToClipboard(text));
+  }
+}
+
+// スマホのメニュー：開け閉めの状態を読み上げ用に伝え、キーボードでも使えるようにする
+// （開け閉めそのものは、各ページの jQuery が .toggle を付け外しする）
+document.addEventListener("DOMContentLoaded", function() {
+  var burger = document.getElementById('hamburger');
+  var nav = document.getElementById('sp-nav');
+  if (!burger || !nav) return;
+
+  function isOpen() {
+    return nav.classList.contains('toggle');
+  }
+  function updateState() {
+    burger.setAttribute('aria-expanded', isOpen() ? 'true' : 'false');
+    burger.setAttribute('aria-label', isOpen() ? 'メニューを閉じる' : 'メニューを開く');
+  }
+
+  // jQuery が .toggle を付け外ししたあとに、状態を読む
+  burger.addEventListener('click', function() {
+    setTimeout(function() {
+      updateState();
+      if (isOpen()) {
+        var firstLink = nav.querySelector('a');
+        if (firstLink) firstLink.focus();
+      }
+    }, 0);
+  });
+  var closeButton = nav.querySelector('.close button');
+  if (closeButton) {
+    closeButton.addEventListener('click', function() {
+      setTimeout(function() {
+        updateState();
+        burger.focus();
+      }, 0);
+    });
+  }
+
+  // Esc キーで閉じて、ハンバーガーにフォーカスを戻す
+  document.addEventListener('keydown', function(e) {
+    if ((e.key === 'Escape' || e.key === 'Esc') && isOpen()) {
+      nav.classList.remove('toggle');
+      updateState();
+      burger.focus();
+    }
+  });
+});
 
 // 日本時間（Asia/Tokyo）での今の年を返す
 // 見ている人の端末がどの国の時間に設定されていても、日本の年に合わせる
@@ -72,6 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function startSlideshow() {
     showSlide(currentSlide);
+    if (prefersReducedMotion()) return; // 動きを減らす設定のときは、1枚目だけ出して切り替えない
     setInterval(nextSlide, 3000); // 3秒ごとに次のスライドへ移動
   }
 
