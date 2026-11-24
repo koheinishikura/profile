@@ -349,13 +349,29 @@ a:focus-visible, button:focus-visible {
       left: 0;
       width: 100%;
       height: 100vh;
-      opacity: 0;
       visibility: hidden; /* 閉じているときは、キーボードでも中に入らない */
       transform: translateY(-100%);
-      /* 閉じるときは、動きが終わってから隠す */
-      transition: transform .2s ease-in-out, opacity .2s ease-in-out, visibility 0s linear .2s;
+      /* 閉じるときは、面を0.4秒で上へ戻してから隠す */
+      transition: transform .4s ease, visibility 0s linear .4s;
       z-index: 10;
    }
+
+   /* メニューを開くときの動き（2026-11-24）：面が上から下りてきて、そのあと、上の項目から順にふわっと出る（下から14px上げながら）
+      閉じるときは、項目をすぐ消して、面を上へ戻す */
+   .sp-nav li {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .15s ease, transform .15s ease;
+   }
+   .sp-nav.toggle li {
+      opacity: 1;
+      transform: none;
+      transition: opacity .5s ease, transform .5s cubic-bezier(0.2, 0.7, 0.2, 1);
+      transition-delay: calc(.22s + var(--i, 0) * .07s); /* 上から順に、0.07秒ずつ遅らせる */
+   }
+   .sp-nav li:nth-child(2) { --i: 1; }
+   .sp-nav li:nth-child(3) { --i: 2; }
+   .sp-nav li:nth-child(4) { --i: 3; }
 
    /* ハンバーガーメニュー（押せる範囲は44×44px。線の見た目と位置は30×25pxのまま） */
    #hamburger {
@@ -446,12 +462,11 @@ a:focus-visible, button:focus-visible {
       background: #fff;
       transform: rotate( -45deg );
    }
-   .toggle {
-      transform: translateY( 0 );
-      opacity: 1;
+   .sp-nav.toggle {
+      transform: none;
       visibility: visible;
-      /* 開くときは、すぐに見えるようにする（中のリンクにフォーカスを移せるように） */
-      transition: transform .2s ease-in-out, opacity .2s ease-in-out, visibility 0s;
+      /* 開くときは、すぐに見えるようにし（中のリンクにフォーカスを移せるように）、面を0.5秒で下ろす */
+      transition: transform .5s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
    }
 
 @media screen and (min-width: 641px) {
@@ -468,7 +483,13 @@ a:focus-visible, button:focus-visible {
       animation: none;
       opacity: 1;
    }
-   .sp-slideshow img, .sp-nav {
+   .sp-slideshow img, .sp-nav, .sp-nav.toggle {
+      transition: none;
+   }
+   /* メニューは、面も項目も動かさず、その場で切り替える */
+   .sp-nav li, .sp-nav.toggle li {
+      opacity: 1;
+      transform: none;
       transition: none;
    }
 }
