@@ -207,26 +207,29 @@ a:focus-visible, button:focus-visible {
    margin-right: auto; /* 右側中央揃え */
 }
 
-/* WORKS List 全体 */
+/* WORKS List 全体：PC（1281px以上）は、同じ幅の3列に並べ、行ごとに上端をそろえる（2026-11-24）
+   1280px以下は、下の @media で1列（display: block）にしている */
 .card-wrap {
-   display: flex;
-   width: auto;
-   flex-wrap: wrap; /* 各行最大3つ制御? */
-   justify-content: space-evenly; /* 可変ウィンドウ等幅揃え */
+   display: grid;
+   grid-template-columns: repeat(3, minmax(0, 1fr)); /* 作品名の長さに関係なく、3列を同じ幅にする */
+   column-gap: 40px;
+   align-items: start;
+   padding: 0 4%;
 }
 
 /* WORKS 個別 Setting */
 .card-list {
    max-width: 100%;
    margin-bottom: 10px; /* 各項下幅 */
-   /* border:solid 5px #000; */
 }
 
 .card-listTitle {
-   font-size: 14px; /* ここの数値が配置に影響している可能性大 */
+   font-size: 14px;
    font-weight: 500;
    text-align: center;
    margin: 30px 0;
+   text-wrap: balance; /* 2行になるときは、行の長さをそろえる */
+   word-break: auto-phrase; /* 日本語を、言葉のまとまりの切れ目で折り返す（対応しているブラウザだけ） */
 }
 
 .card-listImage {
@@ -237,9 +240,13 @@ a:focus-visible, button:focus-visible {
    z-index: -1;
 }
 
-/* WORKS Thumbnail img */
+/* WORKS Thumbnail img：16:9 の枠を先に決め、読み込む前から並びがずれないようにする（2026-11-24） */
 .thumbnail {
-   width: 50vh;
+   display: block;
+   width: 100%;
+   height: auto;
+   aspect-ratio: 16 / 9;
+   object-fit: cover;
 }
 
 .text {
@@ -264,6 +271,7 @@ a:focus-visible, button:focus-visible {
 
    .card-wrap {
       display: block;
+      padding: 0;
    }
 
    .card-listTitle {
@@ -272,6 +280,7 @@ a:focus-visible, button:focus-visible {
    }
 
    .thumbnail {
+      display: inline-block; /* 中央にそろえる（.card-listImage の text-align: center） */
       width: 42vh;
       height: auto;
    }
