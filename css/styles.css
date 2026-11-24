@@ -6,6 +6,7 @@
    --color-bg: #fff;                 /* 背景 */
    --color-overlay: rgba(0, 0, 0, .8); /* スマホのメニューの背景 */
    --color-on-overlay: #fff;         /* スマホのメニューの文字 */
+   --header-h: 95px;                 /* 固定したヘッダーの高さ（スマホは下の @media で104px） */
    color-scheme: light;
 }
 
@@ -13,10 +14,17 @@
    box-sizing: border-box;
 }
 
+/* 書体は、ここで1回だけ指定し、中の文字に引き継ぐ */
 body {
    margin: 0;
    padding: 0px;
+   font-family: 'Noto Sans JP', sans-serif;
    background-color: var(--color-bg); /* ブラウザの設定に左右されず、背景を白にする */
+}
+
+/* ボタンは書体を引き継がないので、引き継ぐようにする */
+button {
+   font-family: inherit;
 }
 
 /* ページの上に戻るボタンで、なめらかにスクロールする（動きを減らす設定のときは下で止める） */
@@ -35,44 +43,37 @@ header {
    background-color: var(--color-bg);
    display: flex;
    align-items: center;
-   clear: both;
-   z-index: 1;
+   z-index: 20; /* ページの上に戻るボタン（z-index: 5）より上。スマホのメニューはヘッダーの中にあるので、開いたときにボタンを覆う */
 }
 
 h1 {
    margin: 0;
    padding: 0;
    font-size: 24px;
-   font-family: 'Noto Sans JP', sans-serif;
    font-weight: 700;
 }
 
 h2 {
    font-size: 40px;
-   font-family: 'Noto Sans JP', sans-serif;
    color: var(--color-text);
 }
 
 h3 {
    font-size: 20px;
-   font-family: 'Noto Sans JP', sans-serif;
    color: var(--color-text);
 }
 
 a {
-   font-family: 'Noto Sans JP', sans-serif;
    font-size: 16px;
    text-decoration: none;
    color: var(--color-text);
 }
 
 p {
-   font-family: 'Noto Sans JP', sans-serif;
    font-weight: 400;
 }
 
 nav {
-   font-family: 'Noto Sans JP', sans-serif;
    font-weight: 300;
    margin: 0 0 0 auto;
 }
@@ -100,7 +101,7 @@ footer {
    overflow: hidden;
 }
 
-/* FadeIn Anim Setting */
+/* ページを開いたときに、1秒でふわっと出す（トップの body と、WORKS の作品一覧） */
 .fadeIn {
    animation-name: fadeInAnime;
    animation-duration: 1s;
@@ -117,21 +118,16 @@ footer {
    }
 }
 
-/* KOHEI NISHIKRA */
+/* 左上の名前（ロゴ） */
 .my-name {
    font-size: 24px;
    font-weight: 700;
    margin-left: 5px;
 }
 
-.about-name {
-   font-size: 18px;
-   font-weight: 400;
-}
-
+/* ABOUT：名前の下に読みがなを出す */
 .rubyposition_under{
    display: inline-block;
-   font-family: 'Noto Sans JP', sans-serif;
    font-size: 24px;
    font-weight: 700;
    color: var(--color-text);
@@ -143,14 +139,14 @@ footer {
    text-align-last: justify;
 }
 
-/* Banner Setting */
+/* ページを縦に並べ、フッターを画面の下に置くための枠（全ページの body） */
 .h-100 {
    display: flex;
    flex-direction: column;
    min-height: 100vh;
 }
 
-/* TopView */
+/* トップの写真の枠 */
 .area_top_view{
    height: 100vh;
    display: flex;
@@ -178,7 +174,7 @@ footer {
       flex: 1;
       height: auto;
       min-height: 0;
-      padding: 95px 0 0; /* 上はヘッダー（固定、高さ95px）の分 */
+      padding: var(--header-h) 0 0; /* 上は固定したヘッダーの分 */
    }
    .index-page .area_top_view > a {
       display: flex;
@@ -196,30 +192,46 @@ footer {
       object-position: center;
    }
 }
+/* スマホの写真（3秒ごとに切り替える4枚）は、PC では出さない */
+.sp-slideshow {
+   display: none;
+}
 @media screen and (max-width: 640px) {
-   .index-page .area_top_view {
-      padding-top: 104px; /* スマホのヘッダー（固定、高さ104px）の分 */
+   .index-page .area_top_view img.pc {
+      display: none;
    }
+   /* 4枚を同じ場所に重ね、今の1枚だけを見せる */
    .index-page .sp-slideshow {
+      display: block;
+      position: relative;
       flex: none;
       width: 100%;
       height: 100%;
    }
    .index-page .sp-slideshow img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
+      opacity: 0;
+   }
+   /* JavaScript が動かないときと、動きを減らす設定のときは、1枚目を出したまま */
+   .index-page .sp-slideshow img:first-child {
+      opacity: 1;
+   }
+   /* js/scripts.js が切り替えるとき：次の写真を1秒でふわっと出し、前の写真はすぐ消す */
+   .index-page .sp-slideshow.is-playing img {
+      opacity: 0;
+   }
+   .index-page .sp-slideshow.is-playing img.is-current {
+      opacity: 1;
+      transition: opacity 1s ease-in-out;
    }
 }
 
-/* パソコンで見たときは"pc"のclassがついた画像が表示される */
-.pc { display: block !important;
-}
-.sp { display: none !important;
-}
-
-/* PC状態で SP Nav Menu を消す */
+/* スマホのメニューは、PC では出さない */
 .sp-nav {
    display: none;
 }
@@ -235,7 +247,7 @@ footer {
    cursor: pointer;
 }
 
-/* PC状態でハンバーガーを消す */
+/* ハンバーガーは、PC では出さない */
 #hamburger {
    display: none;
 }
@@ -263,23 +275,18 @@ a:focus-visible, button:focus-visible {
    transform: translateY(-50%);
 }
 
-/* CONTACT：コピーのボタンの書体をほかの文字とそろえる */
-#copy {
-   font-family: 'Noto Sans JP', sans-serif;
-}
-
 .nav-bold {
    font-weight: bold;
 }
 
-/* WORKS List 全体 (各行最大3つまで制御) */
+/* WORKS：作品一覧の全体の枠（横幅1920pxまで、真ん中に置く） */
 .content {
-   max-width: 1920px; /* 全体枠 */
-   margin-left: auto; /* 左側中央揃え */
-   margin-right: auto; /* 右側中央揃え */
+   max-width: 1920px;
+   margin-left: auto;
+   margin-right: auto;
 }
 
-/* WORKS List 全体：PC（1281px以上）は、同じ幅の3列に並べ、行ごとに上端をそろえる（2026-11-24）
+/* WORKS：作品の並び。PC（1281px以上）は、同じ幅の3列に並べ、行ごとに上端をそろえる（2026-11-24）
    1280px以下は、下の @media で1列（display: block）にしている */
 .card-wrap {
    display: grid;
@@ -289,10 +296,10 @@ a:focus-visible, button:focus-visible {
    padding: 0 4%;
 }
 
-/* WORKS 個別 Setting */
+/* WORKS：作品1つ分 */
 .card-list {
    max-width: 100%;
-   margin-bottom: 10px; /* 各項下幅 */
+   margin-bottom: 10px;
 }
 
 .card-listTitle {
@@ -317,7 +324,7 @@ a:focus-visible, button:focus-visible {
    display: contents;
 }
 
-/* WORKS Thumbnail img：16:9 の枠を先に決め、読み込む前から並びがずれないようにする（2026-11-24） */
+/* WORKS のサムネイル：16:9 の枠を先に決め、読み込む前から並びがずれないようにする（2026-11-24） */
 .thumbnail {
    display: block;
    width: 100%;
@@ -379,7 +386,7 @@ a:focus-visible, button:focus-visible {
    position: fixed;
    right: calc(20px + env(safe-area-inset-right));
    bottom: calc(24px + env(safe-area-inset-bottom));
-   z-index: 5; /* スマホのメニュー（z-index: 10）より下 */
+   z-index: 5; /* ヘッダー（z-index: 20。スマホのメニューも中にある）より下 */
    width: 48px;
    height: 48px;
    border-radius: 50%;
@@ -402,7 +409,8 @@ a:focus-visible, button:focus-visible {
    opacity: .7;
 }
 
-@media screen and (max-width :1280px){
+/* 1280px以下：WORKS を1列にする */
+@media screen and (max-width: 1280px) {
    h2 {
       font-size: 30px;
    }
@@ -427,46 +435,15 @@ a:focus-visible, button:focus-visible {
       margin: 30px 0;
       padding: 0 16px;
    }
-
-   .works_pc {
-      max-width: 100%;
-   }
-   .sp-slide {
-      display: none;
-   }
 }
 
+/* 640px以下：スマホの表示 */
 @media screen and (max-width: 640px) {
-   .pc {
-      display: none !important;
+   :root {
+      --header-h: 104px; /* スマホのヘッダーの高さ */
    }
 
-/* スマホ表示の画像は非表示に設定 */
-   .sp {
-      display: none;
-   }
-
-/* SP状態でのスライドショーのコンテナ */
-   .sp-slideshow {
-      width: 100%; /* コンテナの幅を100%に設定 */
-      height: calc(100vh - 180px); /* ヘッダーの高さを引く */
-      display: none; /* 最初は非表示に設定 */
-   }
-
-/* スライドショーの各画像に対するスタイル */
-   .sp-slideshow img {
-      width: 100%;
-      height: auto; /* 画像の高さは自動 */
-      display: none; /* 最初は非表示に設定 */
-      opacity: 0; /* 初期の透明度を0に設定 */
-      transition: opacity 1s ease-in-out; /* 透明度の変化を1秒かけて行う */
-   }
-
-   body.no-scroll {
-      overflow: hidden;
-   }
-
-   /* SP状態で PC Nav Menu を消す */
+   /* PC のメニューは、スマホでは出さない */
    .pc-nav {
       display: none;
    }
@@ -543,7 +520,7 @@ a:focus-visible, button:focus-visible {
       background-color: var(--color-text);
    }
 
-   /* スマホメニュー */
+   /* スマホのメニューの中の並び */
    .sp-nav ul {
       padding: 0;
       display: flex;
@@ -612,13 +589,6 @@ a:focus-visible, button:focus-visible {
       /* 開くときは、すぐに見えるようにし（中のリンクにフォーカスを移せるように）、面を0.5秒で下ろす */
       transition: transform .5s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
    }
-
-@media screen and (min-width: 641px) {
-   .sp-slideshow, .sp {
-      display: none !important;
-      }
-   }
-
 }
 
 /* 端末で動きを減らす設定にしているときは、フェードインと切り替えの動きを止める */
@@ -638,7 +608,7 @@ a:focus-visible, button:focus-visible {
       animation: none;
       opacity: 1;
    }
-   .sp-slideshow img, .sp-nav, .sp-nav.toggle {
+   .index-page .sp-slideshow.is-playing img.is-current, .sp-nav, .sp-nav.toggle {
       transition: none;
    }
    /* メニューは、面も項目も動かさず、その場で切り替える */
