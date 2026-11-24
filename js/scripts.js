@@ -50,8 +50,8 @@ function copyEmail(button, text) {
   }
 }
 
-// スマホのメニュー：開け閉めの状態を読み上げ用に伝え、キーボードでも使えるようにする
-// （開け閉めそのものは、各ページの jQuery が .toggle を付け外しする）
+// スマホのメニュー：.toggle を付け外しして開け閉めし、状態を読み上げ用に伝え、キーボードでも使えるようにする
+// （2026-11-24に jQuery をやめ、開け閉めもここでするようにした）
 document.addEventListener("DOMContentLoaded", function() {
   var burger = document.getElementById('hamburger');
   var nav = document.getElementById('sp-nav');
@@ -65,23 +65,21 @@ document.addEventListener("DOMContentLoaded", function() {
     burger.setAttribute('aria-label', isOpen() ? 'メニューを閉じる' : 'メニューを開く');
   }
 
-  // jQuery が .toggle を付け外ししたあとに、状態を読む
   burger.addEventListener('click', function() {
-    setTimeout(function() {
-      updateState();
-      if (isOpen()) {
-        var firstLink = nav.querySelector('a');
-        if (firstLink) firstLink.focus();
-      }
-    }, 0);
+    nav.classList.toggle('toggle');
+    updateState();
+    if (isOpen()) {
+      var firstLink = nav.querySelector('a');
+      if (firstLink) firstLink.focus();
+    }
   });
-  var closeButton = nav.querySelector('.close button');
-  if (closeButton) {
-    closeButton.addEventListener('click', function() {
-      setTimeout(function() {
-        updateState();
-        burger.focus();
-      }, 0);
+  // 「閉じる」の行（×の印も含む）を押したら閉じる
+  var closeItem = nav.querySelector('.close');
+  if (closeItem) {
+    closeItem.addEventListener('click', function() {
+      nav.classList.remove('toggle');
+      updateState();
+      burger.focus();
     });
   }
 
@@ -152,4 +150,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // ウィンドウがリサイズされたときにも表示を切り替える
   window.addEventListener('resize', toggleSlideshow);
+});
+
+// ページの上に戻るボタン：600pxより下までスクロールしたら出す（2026-11-24）
+// href="#top" なので、押すとページの一番上に戻る
+document.addEventListener("DOMContentLoaded", function() {
+  var toTop = document.getElementById('toTop');
+  if (!toTop) return;
+  function updateToTop() {
+    toTop.classList.toggle('is-visible', window.scrollY > 600);
+  }
+  window.addEventListener('scroll', updateToTop, { passive: true });
+  updateToTop();
 });

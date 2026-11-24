@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+/* 色は役割の名前で持つ（2026-11-24。Appleのデザイン原則の提案6のうち、色の部分） */
+:root {
+   --color-text: #4b4b4b;            /* 文字、線 */
+   --color-bg: #fff;                 /* 背景 */
+   --color-overlay: rgba(0, 0, 0, .8); /* スマホのメニューの背景 */
+   --color-on-overlay: #fff;         /* スマホのメニューの文字 */
+   color-scheme: light;
+}
+
 * {
    box-sizing: border-box;
 }
@@ -7,14 +16,23 @@
 body {
    margin: 0;
    padding: 0px;
+   background-color: var(--color-bg); /* ブラウザの設定に左右されず、背景を白にする */
+}
+
+/* ページの上に戻るボタンで、なめらかにスクロールする（動きを減らす設定のときは下で止める） */
+html {
+   scroll-behavior: smooth;
 }
 
 header {
    padding: 30px 4% 30px;
+   /* 横向きのiPhoneの画面の端（ノッチ）にかからないようにする（2026-11-24） */
+   padding-left: max(4%, env(safe-area-inset-left));
+   padding-right: max(4%, env(safe-area-inset-right));
    position: fixed;
    top: 0;
    width: 100%;
-   background-color: #fff;
+   background-color: var(--color-bg);
    display: flex;
    align-items: center;
    clear: both;
@@ -32,20 +50,20 @@ h1 {
 h2 {
    font-size: 40px;
    font-family: 'Noto Sans JP', sans-serif;
-   color: #4b4b4b;
+   color: var(--color-text);
 }
 
 h3 {
    font-size: 20px;
    font-family: 'Noto Sans JP', sans-serif;
-   color: #4b4b4b;
+   color: var(--color-text);
 }
 
 a {
    font-family: 'Noto Sans JP', sans-serif;
    font-size: 16px;
    text-decoration: none;
-   color: #4b4b4b;
+   color: var(--color-text);
 }
 
 p {
@@ -71,7 +89,7 @@ li {
 }
 
 footer {
-   background: #fff;
+   background: var(--color-bg);
    position: sticky;
    top: 100vh;
    width: 100%;
@@ -116,7 +134,7 @@ footer {
    font-family: 'Noto Sans JP', sans-serif;
    font-size: 24px;
    font-weight: 700;
-   color: #4b4b4b;
+   color: var(--color-text);
    margin-bottom: 10px;
 }
 .rubyposition_under ruby{
@@ -170,11 +188,11 @@ footer {
 
 /* キーボードで選んだ場所に枠を出す */
 a:focus-visible, button:focus-visible {
-   outline: 2px solid #4b4b4b;
+   outline: 2px solid var(--color-text);
    outline-offset: 4px;
 }
 .sp-nav a:focus-visible, .sp-nav button:focus-visible {
-   outline-color: #fff;
+   outline-color: var(--color-on-overlay);
 }
 
 /* CONTACT：見た目を変えずに、押せる範囲を高さ44pxにする */
@@ -240,6 +258,11 @@ a:focus-visible, button:focus-visible {
    z-index: -1;
 }
 
+/* WORKS の画像は WebP と JPEG の両方を持ち、ブラウザが選ぶ（2026-11-24）。picture は並びに影響させない */
+.card-listImage picture {
+   display: contents;
+}
+
 /* WORKS Thumbnail img：16:9 の枠を先に決め、読み込む前から並びがずれないようにする（2026-11-24） */
 .thumbnail {
    display: block;
@@ -261,7 +284,49 @@ a:focus-visible, button:focus-visible {
    font-size: 14px;
    font-weight: 400;
    text-align: center;
-   color: #4b4b4b;
+   color: var(--color-text);
+}
+
+/* マウスで触れたリンクを少し薄くし、押せるものだと分かるようにする（2026-11-24）
+   指で操作する端末では付けない。トップの大きな写真は薄くしない */
+@media (hover: hover) {
+   a, #copy {
+      transition: opacity .3s ease;
+   }
+   a:hover, #copy:hover {
+      opacity: .7;
+   }
+   .area_top_view a:hover {
+      opacity: 1;
+   }
+}
+
+/* ページの上に戻るボタン（WORKS。少しスクロールしたら js/scripts.js が出す）（2026-11-24） */
+.to-top {
+   position: fixed;
+   right: calc(20px + env(safe-area-inset-right));
+   bottom: calc(24px + env(safe-area-inset-bottom));
+   z-index: 5; /* スマホのメニュー（z-index: 10）より下 */
+   width: 48px;
+   height: 48px;
+   border-radius: 50%;
+   background-color: var(--color-text);
+   color: var(--color-bg);
+   font-size: 18px;
+   font-weight: 700;
+   display: grid;
+   place-items: center;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+   opacity: 0;
+   visibility: hidden;
+   transition: opacity .3s ease, visibility .3s ease;
+}
+.to-top.is-visible {
+   opacity: 1;
+   visibility: visible;
+}
+.to-top.is-visible:hover {
+   opacity: .7;
 }
 
 @media screen and (max-width :1280px){
@@ -342,7 +407,7 @@ a:focus-visible, button:focus-visible {
 
    /* SP Nav Menu */
    .sp-nav {
-      background: rgba(0, 0, 0, .8);
+      background: var(--color-overlay);
       display: block;
       position: fixed;
       top: 0;
@@ -388,7 +453,7 @@ a:focus-visible, button:focus-visible {
       display: block;
       width: 30px;
       height: 2px;
-      background-color: #4b4b4b;
+      background-color: var(--color-text);
       transform: translateY(-50%);
    }
    #hamburger::before {
@@ -399,7 +464,7 @@ a:focus-visible, button:focus-visible {
       left: 7px;
       width: 30px;
       height: 2px;
-      background-color: #4b4b4b;
+      background-color: var(--color-text);
    }
    #hamburger::after {
       content: '';
@@ -409,7 +474,7 @@ a:focus-visible, button:focus-visible {
       left: 7px;
       width: 21px;
       height: 2px;
-      background-color: #4b4b4b;
+      background-color: var(--color-text);
    }
 
    /* スマホメニュー */
@@ -427,12 +492,20 @@ a:focus-visible, button:focus-visible {
    }
    .sp-nav li span {
       font-size: 14px;
-      color: #fff;
+      color: var(--color-on-overlay);
    }
    .sp-nav li a, .sp-nav li span {
       display: block;
       padding: 20px 0;
-      color: #fff;
+      color: var(--color-on-overlay);
+   }
+
+   /* ページの上に戻るボタン：スマホは押せる範囲の44pxにそろえる */
+   .to-top {
+      right: calc(16px + env(safe-area-inset-right));
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      width: 44px;
+      height: 44px;
    }
 
    /* 閉じるアイコン */
@@ -448,7 +521,7 @@ a:focus-visible, button:focus-visible {
       display: block;
       width: 16px;
       height: 1px;
-      background: #fff;
+      background: var(--color-on-overlay);
       transform: rotate( 45deg );
    }
    .sp-nav .close::after {
@@ -459,7 +532,7 @@ a:focus-visible, button:focus-visible {
       display: block;
       width: 16px;
       height: 1px;
-      background: #fff;
+      background: var(--color-on-overlay);
       transform: rotate( -45deg );
    }
    .sp-nav.toggle {
@@ -479,6 +552,12 @@ a:focus-visible, button:focus-visible {
 
 /* 端末で動きを減らす設定にしているときは、フェードインと切り替えの動きを止める */
 @media (prefers-reduced-motion: reduce) {
+   html {
+      scroll-behavior: auto;
+   }
+   a, #copy, .to-top {
+      transition: none;
+   }
    .fadeIn {
       animation: none;
       opacity: 1;
