@@ -163,3 +163,39 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener('scroll', updateToTop, { passive: true });
   updateToTop();
 });
+
+// WORKS：作品を、画面に入ったときに上から順にふわっと出す（2026-11-24。PC・スマホとも）
+// 一度に画面に入った作品（開いたときに見えている作品や、PCの横に並ぶ3つ）は、上から・左から順に0.12秒ずつ遅らせて出す
+// 見た目の指定は css/styles.css の .reveal。JavaScript が動かないときと、動きを減らす設定のときは、最初から表示したまま
+(function() {
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card-list'));
+  if (!cards.length || !('IntersectionObserver' in window) || prefersReducedMotion()) return;
+
+  function show(el, delay) {
+    if (!el.classList.contains('reveal') || el.classList.contains('is-revealed')) return;
+    observer.unobserve(el);
+    if (delay) el.style.transitionDelay = delay + 's';
+    el.addEventListener('transitionend', function done(e) {
+      if (e.target !== el || e.propertyName !== 'opacity') return;
+      el.removeEventListener('transitionend', done);
+      el.classList.remove('reveal', 'is-revealed'); // 出し終えたら、動きのための指定を外す（ほかの指定のじゃまをしないように）
+      el.style.removeProperty('transition-delay');
+    });
+    el.classList.add('is-revealed');
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    var shown = entries.filter(function(entry) { return entry.isIntersecting; })
+      .map(function(entry) { return entry.target; })
+      .sort(function(a, b) { return cards.indexOf(a) - cards.indexOf(b); }); // ページの中の順（上から・左から）
+    shown.forEach(function(el, i) {
+      show(el, Math.min(i, 5) * 0.12);
+    });
+  }, { rootMargin: '0px 0px -5% 0px' }); // 作品の上の端が、画面の下から5%のところまで来たら出す
+
+  cards.forEach(function(el) {
+    el.classList.add('reveal');
+    el.addEventListener('focusin', function() { show(el, 0); }); // キーボードで中のリンクに移ったときは、すぐに出す
+    observer.observe(el);
+  });
+})();

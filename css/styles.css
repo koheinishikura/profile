@@ -341,6 +341,25 @@ a:focus-visible, button:focus-visible {
    color: var(--color-text);
 }
 
+/* WORKS：作品を、画面に入ったときに上から順にふわっと出す（2026-11-24。PC・スマホとも）
+   js/scripts.js が、作品に .reveal を付けて隠し、画面に入ったら .is-revealed を足す（出し終えたら、両方を外す）
+   JavaScript が動かないときと、動きを減らす設定のときは、最初から表示したまま */
+.reveal {
+   opacity: 0;
+   transform: translateY(24px);
+}
+.reveal.is-revealed {
+   opacity: 1;
+   transform: none;
+   transition: opacity .7s ease, transform .7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media print {
+   .reveal {
+      opacity: 1;
+      transform: none;
+   }
+}
+
 /* マウスで触れたリンクを少し薄くし、押せるものだと分かるようにする（2026-11-24）
    指で操作する端末では付けない。トップの大きな写真は薄くしない */
 @media (hover: hover) {
@@ -605,6 +624,11 @@ a:focus-visible, button:focus-visible {
       scroll-behavior: auto;
    }
    a, #copy, .to-top {
+      transition: none;
+   }
+   .reveal, .reveal.is-revealed {
+      opacity: 1;
+      transform: none;
       transition: none;
    }
    .fadeIn {
