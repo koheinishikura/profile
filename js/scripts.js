@@ -1,47 +1,12 @@
-// スライドショーのサイズ調整機能
-function adjustSlideshowSize() {
-  var slideshowContainer = document.querySelector(".sp-slideshow");
-  if (slideshowContainer) {
-    var width = window.innerWidth;
-    var height = (width * 9) / 16; // 縦横比を16:9に保つ
-    slideshowContainer.style.width = width + 'px';
-    slideshowContainer.style.height = height + 'px';
-  }
-}
+// スマホ表示とみなす画面の幅（css/styles.css の max-width: 640px と合わせる）
+var SP_MAX_WIDTH = 640;
 
-// スライドショーの表示/非表示切り替え機能
+// スライドショーの表示/非表示切り替え機能（トップページにだけある）
 function toggleSlideshow() {
-  if (window.innerWidth <= 641) {
-    document.querySelector('.sp-slideshow').style.display = 'block';
-    document.querySelectorAll('.sp').forEach(function(el) {
-      el.style.display = 'block';
-    });
-  } else {
-    document.querySelector('.sp-slideshow').style.display = 'none';
-    document.querySelectorAll('.sp').forEach(function(el) {
-      el.style.display = 'none';
-    });
-  }
+  var slideshow = document.querySelector('.sp-slideshow');
+  if (!slideshow) return;
+  slideshow.style.display = window.innerWidth <= SP_MAX_WIDTH ? 'block' : 'none';
 }
-
-window.onload = function() {
-  // スクロール禁止機能
-  function disableScroll(event) { event.preventDefault(); }
-  document.getElementById('on').onclick = function() {
-    document.addEventListener('touchmove', disableScroll, { passive: false });
-    document.body.classList.add('overflow-hidden');
-  };
-  document.getElementById('off').onclick = function() {
-    document.removeEventListener('touchmove', disableScroll, { passive: false });
-    document.body.classList.remove('overflow-hidden');
-  };
-
-  adjustSlideshowSize();
-  window.addEventListener('resize', adjustSlideshowSize);
-
-  toggleSlideshow(); // この関数を初期ロード時にも呼び出す
-  window.addEventListener('resize', toggleSlideshow);
-};
 
 // ピンチイン・ピンチアウトを禁止する機能
 document.documentElement.addEventListener('touchstart', function (e) {
@@ -63,8 +28,10 @@ function copyToClipboard(text) {
 
 // DOMのロード完了時にスライドショーを制御する機能
 document.addEventListener("DOMContentLoaded", function() {
-  toggleSlideshow();
   var slides = document.querySelectorAll(".sp-slide"); // スライド要素をすべて取得
+  if (slides.length === 0) return; // スライドショーのないページでは何もしない
+
+  toggleSlideshow();
   var currentSlide = 0; // 現在のスライドのインデックス
 
   // 指定されたインデックスのスライドを表示する関数
@@ -90,13 +57,10 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // SP表示の場合のみスライドショーを開始
-  if (window.innerWidth <= 640) {
-    document.querySelector(".sp-slideshow").style.display = "block";
+  if (window.innerWidth <= SP_MAX_WIDTH) {
     startSlideshow();
   }
-});
 
-// ウィンドウがリサイズされたときにも関数を実行
-window.addEventListener('resize', function() {
-  toggleSlideshow();
+  // ウィンドウがリサイズされたときにも表示を切り替える
+  window.addEventListener('resize', toggleSlideshow);
 });
